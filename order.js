@@ -299,6 +299,148 @@
   }
 
   /* -------------------------------- Checkout -------------------------------- */
+
+  /* ---------------------- Checkout field guidance ----------------------
+     Validation-only enhancement:
+     - does not change totals, orders, Make.com or PayFast
+     - scrolls to the first missing/invalid required field
+     - focuses and highlights that exact field
+     - shows a clear message beside it
+     --------------------------------------------------------------------- */
+  function checkoutValidationMessage(field) {
+    if (!field) return "Please complete this required field.";
+
+    const name = field.name || "";
+    const id = field.id || "";
+
+    if (name === "firstName") return "Please enter your first name.";
+    if (name === "surname") return "Please enter your surname.";
+    if (name === "email") {
+      return field.validity?.typeMismatch
+        ? "Please enter a valid email address."
+        : "Please enter your email address.";
+    }
+    if (name === "phone") return "Please enter your phone / WhatsApp number.";
+    if (id === "deliveryAreaSelect" || name === "deliveryArea") return "Please select your delivery area.";
+    if (id === "customArea" || name === "customArea") return "Please enter your area or city.";
+    if (name === "address") return "Please enter your street address.";
+    if (name === "suburb") return "Please enter your suburb.";
+    if (field.type === "checkbox") return "Please confirm that your order details and delivery address are correct.";
+
+    return "Please complete this required field.";
+  }
+
+  function ensureCheckoutValidationStyles() {
+    if (document.getElementById("hopCheckoutValidationStyles")) return;
+
+    const style = document.createElement("style");
+    style.id = "hopCheckoutValidationStyles";
+    style.textContent = `
+      .hop-checkout-invalid {
+        outline: 2px solid #b42318 !important;
+        outline-offset: 2px !important;
+        border-color: #b42318 !important;
+      }
+
+      .hop-checkout-invalid-wrap {
+        border-radius: 4px;
+        box-shadow: 0 0 0 3px rgba(180, 35, 24, .10);
+      }
+
+      .hop-field-error-message {
+        display: block;
+        margin-top: 7px;
+        color: #b42318;
+        font-size: 11px;
+        font-weight: 600;
+        line-height: 1.45;
+        letter-spacing: 0;
+        text-transform: none;
+      }
+    `;
+    document.head.appendChild(style);
+  }
+
+  function clearCheckoutFieldError(field) {
+    if (!field) return;
+
+    field.classList.remove("hop-checkout-invalid");
+    field.removeAttribute("aria-invalid");
+
+    const wrap = field.closest("label") || field.parentElement;
+    wrap?.classList.remove("hop-checkout-invalid-wrap");
+
+    const error = wrap?.querySelector(":scope > .hop-field-error-message");
+    error?.remove();
+  }
+
+  function showCheckoutFieldError(field, statusMessage) {
+    if (!field) return false;
+
+    ensureCheckoutValidationStyles();
+
+    /* Remove any old checkout validation marker before showing the new one. */
+    document.querySelectorAll(".hop-checkout-invalid").forEach(item => {
+      item.classList.remove("hop-checkout-invalid");
+      item.removeAttribute("aria-invalid");
+    });
+    document.querySelectorAll(".hop-checkout-invalid-wrap").forEach(item => {
+      item.classList.remove("hop-checkout-invalid-wrap");
+    });
+    document.querySelectorAll(".hop-field-error-message").forEach(item => item.remove());
+
+    const message = checkoutValidationMessage(field);
+    const wrap = field.closest("label") || field.parentElement;
+
+    field.classList.add("hop-checkout-invalid");
+    field.setAttribute("aria-invalid", "true");
+    wrap?.classList.add("hop-checkout-invalid-wrap");
+
+    if (wrap) {
+      const error = document.createElement("span");
+      error.className = "hop-field-error-message";
+      error.setAttribute("role", "alert");
+      error.textContent = message;
+      wrap.appendChild(error);
+    }
+
+    if (statusMessage) statusMessage.textContent = message;
+
+    /* Centering the field keeps it clear of the sticky mobile header. */
+    field.scrollIntoView({
+      behavior: "smooth",
+      block: "center",
+      inline: "nearest"
+    });
+
+    window.setTimeout(() => {
+      try {
+        field.focus({ preventScroll: true });
+      } catch {
+        field.focus();
+      }
+
+      /* Keep the browser's own accessibility/validation hint as well. */
+      field.reportValidity?.();
+    }, 380);
+
+    return true;
+  }
+
+  function guideToFirstInvalidCheckoutField(form, statusMessage) {
+    if (!form) return false;
+
+    const fields = Array.from(form.querySelectorAll("input, select, textarea"));
+    const firstInvalid = fields.find(field =>
+      !field.disabled &&
+      field.willValidate &&
+      !field.checkValidity()
+    );
+
+    if (!firstInvalid) return false;
+    return showCheckoutFieldError(firstInvalid, statusMessage);
+  }
+
   function initCheckout() {
     const form = $("checkoutPageForm");
     if (!form) return;
@@ -335,6 +477,19 @@
 
     customArea?.addEventListener("input", updateCheckoutTotals);
 
+    /* As soon as the customer corrects a field, remove its red marker/message. */
+    form.addEventListener("input", event => {
+      const field = event.target;
+      if (!(field instanceof HTMLInputElement || field instanceof HTMLSelectElement || field instanceof HTMLTextAreaElement)) return;
+      if (!field.willValidate || field.checkValidity()) clearCheckoutFieldError(field);
+    });
+
+    form.addEventListener("change", event => {
+      const field = event.target;
+      if (!(field instanceof HTMLInputElement || field instanceof HTMLSelectElement || field instanceof HTMLTextAreaElement)) return;
+      if (!field.willValidate || field.checkValidity()) clearCheckoutFieldError(field);
+    });
+
     document.addEventListener("hop:cart-updated", () => {
       if (!Store.getCartDetails().length) {
         window.location.reload();
@@ -346,7 +501,17 @@
 
     form.addEventListener("submit", async event => {
       event.preventDefault();
-      if (!form.reportValidity()) return;
+
+      /* Stop before any order/payment work and guide the customer to the
+         FIRST missing or invalid required field. After they fix it, the next
+         submit will guide them to the next missing field, if any. */
+      if (!form.checkValidity()) {
+        guideToFirstInvalidCheckoutField(form, statusMessage);
+        return;
+      }
+
+      /* Everything required is valid; clear any old validation marker. */
+      document.querySelectorAll(".hop-checkout-invalid").forEach(field => clearCheckoutFieldError(field));
 
       const zoneValue = areaSelect?.value || "";
       const customAreaValue = customArea?.value || "";
