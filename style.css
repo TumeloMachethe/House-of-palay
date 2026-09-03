@@ -582,6 +582,38 @@ img { display: block; max-width: 100%; }
     backdrop-filter: blur(18px);
     -webkit-backdrop-filter: blur(18px);
   }
+  /* =========================
+   MOBILE BAG CLOSE FIX
+   ========================= */
+
+@media (max-width: 820px) {
+
+  .cart-drawer {
+    padding-top: 18px !important;
+    z-index: 12000 !important;
+  }
+
+  .cart-head {
+    position: sticky;
+    top: 0;
+    z-index: 5;
+    background: var(--paper);
+    padding-top: 6px;
+  }
+
+  #cartClose {
+    position: relative !important;
+    z-index: 10 !important;
+    display: inline-grid !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+  }
+
+  .cart-overlay,
+  #cartOverlay {
+    z-index: 11999 !important;
+  }
+}
 
   .nav-shell {
     height: 66px !important;
