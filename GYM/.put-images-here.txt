@@ -1,0 +1,1 @@
+Put your GYM product images in this folder. See ../IMAGE-NAMES.txt for filenames.
