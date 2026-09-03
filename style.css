@@ -57,7 +57,7 @@ img { display: block; max-width: 100%; }
 }
 .page-loader.hide { opacity: 0; visibility: hidden; }
 .loader-mark {
-  width: 94px;
+  width: 95px;
   height: 94px;
   border: 1px solid var(--gold);
   border-radius: 50%;
