@@ -328,6 +328,58 @@ window.HOP_PRODUCTS = [
       { label: "100 ml", price: 220.00 }
     ]
   },
+   {
+    id: "perf-EAU",
+    name: "EAU DE PARFUM",
+    category: "Perfumes",
+    price: 120.00,
+    image: "PERFUMES/EAU DE PARFUM.jpeg",
+    badge: "New",
+    description: "Natural Spray.",
+    options: [
+      { label: "50 ml", price: 120.00 },
+      { label: "100 ml", price: 220.00 }
+    ]
+  },
+  {
+    id: "perf-HAYAATI",
+    name: "HAYAATI Rose",
+    category: "Perfumes",
+    price: 120.00,
+    image: "PERFUMES/HAYAATI Rose.jpeg",
+    badge: "New",
+    description: "Natural Spray.",
+    options: [
+      { label: "50 ml", price: 120.00 },
+      { label: "100 ml", price: 220.00 }
+    ]
+  },
+  {
+    id: "perf-Latarffa",
+    name: "Yara Latarffa",
+    category: "Perfumes",
+    price: 120.00,
+    image: "PERFUMES/Yara Latarffa.jpeg",
+    badge: "New",
+    description: "Spray with pride.",
+    options: [
+      { label: "50 ml", price: 120.00 },
+      { label: "100 ml", price: 220.00 }
+    ]
+  },
+   {
+    id: "perf-Latarffa",
+    name: "YARA Lattafa",
+    category: "Perfumes",
+    price: 120.00,
+    image: "PERFUMES/YARA Lattafa.jpeg",
+    badge: "New",
+    description: "Smell like a Queen.",
+    options: [
+      { label: "50 ml", price: 120.00 },
+      { label: "100 ml", price: 220.00 }
+    ]
+  },
   {
     id: "perf-yara",
     name: "YARA",
@@ -499,6 +551,15 @@ window.HOP_PRODUCTS = [
     description: "BlingGirl acrylic powder for creating polished nail sets."
   },
   {
+    id: "nails-acrylic-3",
+    name: "BlingGirl Rose Gold Acrylic Powder",
+    category: "Nails",
+    price: 59.99,
+    image: "NAILS/b3.jpeg",
+    badge: "Everyday",
+    description: "BlingGirl acrylic powder for creating polished nail sets."
+  },
+  {
     id: "nails-acrylic-2",
     name: "BlingGirl Acrylic Powder 02",
     category: "Nails",
@@ -516,6 +577,16 @@ window.HOP_PRODUCTS = [
     badge: "Finish",
     description: "A glossy finishing product for a polished manicure look.",
     colors: ["Stucture top", "Flawless", "Sticky", "Strong Base", "Stay Shiny"]
+  },
+  {
+    id: "nails-top-polis",
+    name: "BlingGirl Gel polish for Each",
+    category: "Nails",
+    price: 44.99,
+    image: "NAILS/blinggirl.jpeg",
+    badge: "Finish",
+    description: "A glossy finishing product for a polished manicure look.",
+    colors: ["Dusty Rose", "Coral Pink", "Classic Red", "Fuchsia", "Dark Berry"]
   },
   {
     id: "nails-beginner-kit",
