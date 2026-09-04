@@ -368,11 +368,11 @@ window.HOP_PRODUCTS = [
     ]
   },
    {
-    id: "perf-Latarffa",
-    name: "YARA Lattafa",
+    id: "perf-Latarffa-pink",
+    name: "YARA Lattafa pink",
     category: "Perfumes",
     price: 120.00,
-    image: "PERFUMES/YARA Lattafa.jpeg",
+    image: "PERFUMES/YARA Lattafa pink.jpeg",
     badge: "New",
     description: "Smell like a Queen.",
     options: [
