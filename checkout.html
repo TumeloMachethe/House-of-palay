@@ -13,87 +13,397 @@
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&amp;family=DM+Sans:wght@300;400;500;600&amp;family=Great+Vibes&amp;display=swap" rel="stylesheet"/>
 <link href="style.css" rel="stylesheet"/>
+
 <style>
   body.order-page { padding-top: 0 !important; }
+
+  /* Terms checkbox */
+  .terms-check {
+    align-items: flex-start;
+  }
+
+  .terms-check input {
+    margin-top: 4px;
+    flex: 0 0 auto;
+  }
+
+  .terms-check a {
+    color: var(--gold-deep);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    font-weight: 600;
+  }
+
+  .terms-check a:hover {
+    color: var(--gold);
+  }
+
+  .terms-check.has-error {
+    outline: 1px solid #a4463c;
+    outline-offset: 10px;
+    border-radius: 2px;
+  }
 </style>
+
 <meta content="Secure House of Palay checkout." name="description"/>
 <title>Checkout | House of Palay</title>
-<meta content="index, follow" name="robots"/><meta content="House of Palay" property="og:site_name"/><meta content="website" property="og:type"/><meta content="Checkout | House of Palay" property="og:title"/><meta content="Secure House of Palay checkout." property="og:description"/><meta content="summary" name="twitter:card"/><meta content="light" name="color-scheme"/></head>
-<body class="order-page" data-order-page="checkout"><a class="skip-link" href="#mainContent">Skip to content</a>
+<meta content="index, follow" name="robots"/>
+<meta content="House of Palay" property="og:site_name"/>
+<meta content="website" property="og:type"/>
+<meta content="Checkout | House of Palay" property="og:title"/>
+<meta content="Secure House of Palay checkout." property="og:description"/>
+<meta content="summary" name="twitter:card"/>
+<meta content="light" name="color-scheme"/>
+</head>
+
+<body class="order-page" data-order-page="checkout">
+<a class="skip-link" href="#mainContent">Skip to content</a>
+
 <div aria-hidden="true" class="page-loader" id="pageLoader">
-<div class="loader-mark"><img alt="" decoding="async" src="logo.jpeg"/></div>
-<p>House of Palay</p>
+  <div class="loader-mark"><img alt="" decoding="async" src="logo.jpeg"/></div>
+  <p>House of Palay</p>
 </div>
 
 <main class="checkout-page-main" id="mainContent">
-<section class="order-page-hero"><div><p class="eyebrow">HOUSE OF PALAY</p><h1>Checkout</h1><p>Review your order, choose your delivery area and continue to secure PayFast payment.</p></div></section>
-<div class="checkout-empty hidden" id="checkoutEmpty"><div class="empty-crown">♕</div><h2>Your bag is empty.</h2><p>Add products before checking out.</p><a class="btn btn-dark" href="index.html#shop">Continue shopping</a></div>
+
+<section class="order-page-hero reveal">
+  <div>
+    <p class="eyebrow">HOUSE OF PALAY</p>
+    <h1>Checkout</h1>
+    <p>Review your order, choose your delivery area and continue to secure PayFast payment.</p>
+  </div>
+</section>
+
+<div class="checkout-empty hidden" id="checkoutEmpty">
+  <div class="empty-crown">♕</div>
+  <h2>Your bag is empty.</h2>
+  <p>Add products before checking out.</p>
+  <a class="btn btn-dark" href="index.html#shop">Continue shopping</a>
+</div>
+
 <section class="checkout-page-layout" id="checkoutContent">
+
 <form class="checkout-page-form" id="checkoutPageForm" novalidate="">
-<div class="checkout-section-card">
-<div class="checkout-section-head"><span>01</span><div><p class="eyebrow">CONTACT</p><h2>Your details</h2></div></div>
-<div class="form-grid"><label>First name<input autocomplete="given-name" maxlength="80" name="firstName" required="" type="text"/></label><label>Surname<input autocomplete="family-name" maxlength="80" name="surname" required="" type="text"/></label></div>
-<label>Email address<input autocomplete="email" inputmode="email" maxlength="160" name="email" required="" type="email"/></label>
-<label>Phone / WhatsApp<input autocomplete="tel" inputmode="tel" maxlength="30" name="phone" required="" type="tel"/></label>
-</div>
-<div class="checkout-section-card">
-<div class="checkout-section-head"><span>02</span><div><p class="eyebrow">DELIVERY</p><h2>Where should we deliver?</h2></div></div>
-<!-- DELIVERY AREA DROPDOWN is generated from freeDeliveryAreas in store-data.js -->
-<label>Delivery area<select id="deliveryAreaSelect" name="deliveryArea" required=""></select></label>
-<div class="hidden" id="customAreaWrap"><label>Other area / city<input autocomplete="address-level2" id="customArea" maxlength="100" name="customArea" placeholder="Enter your area or city" type="text"/></label></div>
-<p class="delivery-fee-note" id="deliveryFeeNote">Choose an area to calculate delivery.</p>
-<label>Street address<input autocomplete="street-address" maxlength="180" name="address" required="" type="text"/></label>
-<div class="form-grid"><label>Suburb<input autocomplete="address-level2" maxlength="100" name="suburb" required="" type="text"/></label><label>Postal code<input autocomplete="postal-code" inputmode="numeric" maxlength="12" name="postalCode" type="text"/></label></div>
-<label>Order notes<textarea name="notes" placeholder="Colours, delivery notes, special requests..." rows="3"></textarea></label>
-</div>
-<div class="checkout-section-card">
-<div class="checkout-section-head"><span>03</span><div><p class="eyebrow">PAYMENT</p><h2>Secure payment</h2></div></div>
-<div class="payfast-ready"><strong>PayFast</strong><p>You will be redirected to PayFast to complete payment securely. House of Palay does not collect card details on this website.</p></div>
-<label class="confirm-check"><input required="" type="checkbox"/><span>I confirm that my order details and delivery address are correct.</span></label>
-<button class="btn btn-dark full checkout-pay-button" id="payNowButton" type="submit">Continue to secure payment</button>
-<p aria-live="polite" class="checkout-status" id="checkoutStatus"></p>
-</div>
+
+  <div class="checkout-section-card reveal">
+    <div class="checkout-section-head">
+      <span>01</span>
+      <div>
+        <p class="eyebrow">CONTACT</p>
+        <h2>Your details</h2>
+      </div>
+    </div>
+
+    <div class="form-grid">
+      <label>
+        First name
+        <input autocomplete="given-name" maxlength="80" name="firstName" required="" type="text"/>
+      </label>
+
+      <label>
+        Surname
+        <input autocomplete="family-name" maxlength="80" name="surname" required="" type="text"/>
+      </label>
+    </div>
+
+    <label>
+      Email address
+      <input autocomplete="email" inputmode="email" maxlength="160" name="email" required="" type="email"/>
+    </label>
+
+    <label>
+      Phone / WhatsApp
+      <input autocomplete="tel" inputmode="tel" maxlength="30" name="phone" required="" type="tel"/>
+    </label>
+  </div>
+
+  <div class="checkout-section-card reveal">
+    <div class="checkout-section-head">
+      <span>02</span>
+      <div>
+        <p class="eyebrow">DELIVERY</p>
+        <h2>Where should we deliver?</h2>
+      </div>
+    </div>
+
+    <!-- DELIVERY AREA DROPDOWN is generated from freeDeliveryAreas in store-data.js -->
+    <label>
+      Delivery area
+      <select id="deliveryAreaSelect" name="deliveryArea" required=""></select>
+    </label>
+
+    <div class="hidden" id="customAreaWrap">
+      <label>
+        Other area / city
+        <input autocomplete="address-level2" id="customArea" maxlength="100" name="customArea" placeholder="Enter your area or city" type="text"/>
+      </label>
+    </div>
+
+    <p class="delivery-fee-note" id="deliveryFeeNote">
+      Choose an area to calculate delivery.
+    </p>
+
+    <label>
+      Street address
+      <input autocomplete="street-address" maxlength="180" name="address" required="" type="text"/>
+    </label>
+
+    <div class="form-grid">
+      <label>
+        Suburb
+        <input autocomplete="address-level2" maxlength="100" name="suburb" required="" type="text"/>
+      </label>
+
+      <label>
+        Postal code
+        <input autocomplete="postal-code" inputmode="numeric" maxlength="12" name="postalCode" type="text"/>
+      </label>
+    </div>
+
+    <label>
+      Order notes
+      <textarea name="notes" placeholder="Colours, delivery notes, special requests..." rows="3"></textarea>
+    </label>
+  </div>
+
+  <div class="checkout-section-card reveal">
+    <div class="checkout-section-head">
+      <span>03</span>
+      <div>
+        <p class="eyebrow">PAYMENT</p>
+        <h2>Secure payment</h2>
+      </div>
+    </div>
+
+    <div class="payfast-ready">
+      <strong>PayFast</strong>
+      <p>
+        You will be redirected to PayFast to complete payment securely.
+        House of Palay does not collect card details on this website.
+      </p>
+    </div>
+
+    <!-- One required checkbox only -->
+    <label class="confirm-check terms-check" id="termsCheckWrap">
+      <input id="termsAgreement" name="termsAgreement" required type="checkbox"/>
+      <span>
+        I agree to the
+        <a href="terms.html" target="_blank" rel="noopener noreferrer">
+          Terms &amp; Conditions
+        </a>,
+        including the delivery, cancellation, returns, exchanges and refund policies.
+      </span>
+    </label>
+
+    <button class="btn btn-dark full checkout-pay-button" id="payNowButton" type="submit">
+      Continue to secure payment
+    </button>
+
+    <p aria-live="polite" class="checkout-status" id="checkoutStatus"></p>
+  </div>
+
 </form>
-<aside class="checkout-page-summary">
-<p class="eyebrow">YOUR ORDER</p><h2>Order summary</h2>
-<div class="order-number-preview"><span>Order number</span><strong id="checkoutOrderNumber">Generating…</strong></div>
-<div id="checkoutPageItems"></div>
-<div class="checkout-totals"><div><span>Products subtotal</span><strong id="checkoutSubtotal">R0.00</strong></div><div><span>Service fee</span><strong id="checkoutServiceFee">R0.00</strong></div><div><span>Delivery</span><strong id="checkoutDeliveryFee">—</strong></div><div class="grand"><span>Total</span><strong id="checkoutGrandTotal">R0.00</strong></div></div>
-<a class="summary-back-link" href="index.html#shop">← Continue shopping</a>
+
+<aside class="checkout-page-summary reveal">
+  <p class="eyebrow">YOUR ORDER</p>
+  <h2>Order summary</h2>
+
+  <div class="order-number-preview">
+    <span>Order number</span>
+    <strong id="checkoutOrderNumber">Generating…</strong>
+  </div>
+
+  <div id="checkoutPageItems"></div>
+
+  <div class="checkout-totals">
+    <div>
+      <span>Products subtotal</span>
+      <strong id="checkoutSubtotal">R0.00</strong>
+    </div>
+
+    <div>
+      <span>Service fee</span>
+      <strong id="checkoutServiceFee">R0.00</strong>
+    </div>
+
+    <div>
+      <span>Delivery</span>
+      <strong id="checkoutDeliveryFee">—</strong>
+    </div>
+
+    <div class="grand">
+      <span>Total</span>
+      <strong id="checkoutGrandTotal">R0.00</strong>
+    </div>
+  </div>
+
+  <a class="summary-back-link" href="index.html#shop">← Continue shopping</a>
 </aside>
+
 </section>
 </main>
+
 <footer class="site-footer">
-<div class="footer-brand"><img alt="House of Palay" decoding="async" loading="lazy" src="logo.jpeg"/><p>Home of Queens.</p></div>
-<div class="footer-column"><h3>Shop</h3><a href="Eyelashes.html">Eyelashes</a><a href="Hair.html">Hair</a><a href="Perfumes.html">Perfumes</a><a href="Gym.html">Gym Wear</a><a href="Pj.html">PJs</a><a href="Nails.html">Nails</a></div>
-<div class="footer-column"><h3>Orders</h3><a aria-current="page" href="checkout.html">Checkout</a><a href="index.html#delivery">Delivery</a><a href="index.html#about">Our Story</a></div>
-<div class="footer-column"><h3>Connect</h3><a data-contact-email="">Email</a><a data-whatsapp="">WhatsApp</a><a data-social="instagram">Instagram</a><a data-social="tiktok">TikTok</a><a data-social="facebook">Facebook</a></div>
-<div class="footer-bottom"><span>© <span id="year"></span> House of Palay. All rights reserved.</span><span>Beauty · Fashion · Hair · Fragrance</span></div>
+
+<div class="footer-brand">
+  <img alt="House of Palay" decoding="async" loading="lazy" src="logo.jpeg"/>
+  <p>Home of Queens.</p>
+</div>
+
+<div class="footer-column">
+  <h3>Shop</h3>
+  <a href="Eyelashes.html">Eyelashes</a>
+  <a href="Hair.html">Hair</a>
+  <a href="Perfumes.html">Perfumes</a>
+  <a href="Gym.html">Gym Wear</a>
+  <a href="Pj.html">PJs</a>
+  <a href="Nails.html">Nails</a>
+</div>
+
+<div class="footer-column">
+  <h3>Orders</h3>
+  <a aria-current="page" href="checkout.html">Checkout</a>
+  <a href="terms.html">Terms &amp; Conditions</a>
+  <a href="index.html#delivery">Delivery</a>
+  <a href="index.html#about">Our Story</a>
+</div>
+
+<div class="footer-column">
+  <h3>Connect</h3>
+  <a data-contact-email="">Email</a>
+  <a data-whatsapp="">WhatsApp</a>
+  <a data-social="instagram">Instagram</a>
+  <a data-social="tiktok">TikTok</a>
+  <a data-social="facebook">Facebook</a>
+</div>
+
+<div class="footer-bottom">
+  <span>© <span id="year"></span> House of Palay. All rights reserved.</span>
+  <span>Beauty · Fashion · Hair · Fragrance</span>
+</div>
+
 </footer>
+
 <!-- SHOPPING BAG: shared across all shopping pages -->
 <aside aria-hidden="true" aria-label="Shopping bag" aria-modal="true" class="cart-drawer" id="cartDrawer" role="dialog">
-<div class="cart-head"><div><p class="eyebrow">YOUR SELECTION</p><h2>Shopping Bag</h2></div><button aria-label="Close bag" class="icon-btn" id="cartClose">×</button></div>
-<div class="cart-items" id="cartItems"></div>
-<div class="cart-empty" id="cartEmpty"><div class="empty-crown">♕</div><h3>Your bag is waiting.</h3><p>Add something beautiful.</p></div>
-<div class="cart-footer" id="cartFooter">
-<div class="cart-total-row"><span>Products subtotal</span><strong id="cartTotal">R0.00</strong></div>
-<p>Delivery and the optional service fee are calculated on the checkout page.</p>
-<button class="btn btn-dark full" id="checkoutBtn">Go to checkout</button>
+
+<div class="cart-head">
+  <div>
+    <p class="eyebrow">YOUR SELECTION</p>
+    <h2>Shopping Bag</h2>
+  </div>
+
+  <button aria-label="Close bag" class="icon-btn" id="cartClose">×</button>
 </div>
+
+<div class="cart-items" id="cartItems"></div>
+
+<div class="cart-empty" id="cartEmpty">
+  <div class="empty-crown">♕</div>
+  <h3>Your bag is waiting.</h3>
+  <p>Add something beautiful.</p>
+</div>
+
+<div class="cart-footer" id="cartFooter">
+  <div class="cart-total-row">
+    <span>Products subtotal</span>
+    <strong id="cartTotal">R0.00</strong>
+  </div>
+
+  <p>Delivery and the optional service fee are calculated on the checkout page.</p>
+
+  <button class="btn btn-dark full" id="checkoutBtn">
+    Go to checkout
+  </button>
+</div>
+
 </aside>
+
 <div aria-hidden="true" class="screen-overlay" id="cartOverlay"></div>
+
 <!-- PRODUCT QUICK VIEW -->
 <dialog class="product-modal" id="productModal">
+
 <button aria-label="Close product" class="modal-close" id="productModalClose">×</button>
+
 <div class="product-modal-grid">
-<div class="modal-image-wrap"><img alt="" decoding="async" id="modalImage" loading="lazy"/></div>
-<div class="modal-copy"><p class="eyebrow" id="modalCategory"></p><h2 id="modalName"></h2><p class="modal-price" id="modalPrice"></p><p id="modalDescription"></p><div class="modal-option" id="modalOptionWrap"><label for="modalOption">Choose option</label><select id="modalOption"></select></div><button class="btn btn-dark full" id="modalAdd">Add to bag</button></div>
+
+  <div class="modal-image-wrap">
+    <img alt="" decoding="async" id="modalImage" loading="lazy"/>
+  </div>
+
+  <div class="modal-copy">
+    <p class="eyebrow" id="modalCategory"></p>
+    <h2 id="modalName"></h2>
+    <p class="modal-price" id="modalPrice"></p>
+    <p id="modalDescription"></p>
+
+    <div class="modal-option" id="modalOptionWrap">
+      <label for="modalOption">Choose option</label>
+      <select id="modalOption"></select>
+    </div>
+
+    <button class="btn btn-dark full" id="modalAdd">
+      Add to bag
+    </button>
+  </div>
+
 </div>
 </dialog>
+
 <div aria-live="polite" class="toast" id="toast" role="status"></div>
+
 <!-- Edit products/prices/images/integrations in store-data.js -->
 <script src="store-data.js"></script>
 <script src="script.js"></script>
+
+<!--
+  Terms guard:
+  This runs BEFORE order.js, so PayFast checkout cannot continue
+  unless the customer has accepted the Terms & Conditions.
+-->
+<script>
+(() => {
+  const form = document.getElementById("checkoutPageForm");
+  const terms = document.getElementById("termsAgreement");
+  const termsWrap = document.getElementById("termsCheckWrap");
+  const status = document.getElementById("checkoutStatus");
+
+  if (!form || !terms) return;
+
+  terms.addEventListener("change", () => {
+    if (terms.checked) {
+      termsWrap?.classList.remove("has-error");
+
+      if (status && status.textContent.includes("Terms")) {
+        status.textContent = "";
+      }
+    }
+  });
+
+  form.addEventListener("submit", (event) => {
+    if (terms.checked) return;
+
+    event.preventDefault();
+    event.stopImmediatePropagation();
+
+    termsWrap?.classList.add("has-error");
+
+    if (status) {
+      status.textContent =
+        "Please accept the Terms & Conditions before continuing to secure payment.";
+    }
+
+    termsWrap?.scrollIntoView({
+      behavior: "smooth",
+      block: "center"
+    });
+
+    window.setTimeout(() => terms.focus(), 450);
+  });
+})();
+</script>
+
 <script src="order.js"></script>
 </body>
 </html>
