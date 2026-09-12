@@ -268,13 +268,14 @@ window.HOP_PRODUCTS = [
     sizes: ["S", "M", "L", "XL"]
   },
   /* ================================= HAIR ================================ */
-  {
+ {
     id: "hair-bone-straight",
     name: "Bone Straight Frontal Hair",
     category: "Hair",
     price: 1000.00,
     image: "HAIR/Bone Straight frontal hair.jpeg",
     badge: "Signature",
+    hiddenFromShop: true,
     description: "Silky bone-straight frontal hair with a polished finish.",
     options: [
       { label: "12 inch", price: 1000 },
@@ -290,6 +291,7 @@ window.HOP_PRODUCTS = [
     price: 1000.00,
     image: "HAIR/Chocolate Brown Straight Middle Part bob Wig.jpeg",
     badge: "Popular",
+    hiddenFromShop: true,
     description: "A sleek chocolate-brown middle-part bob with an elegant finish.",
     options: [
       { label: "12 inch", price: 1000 },
@@ -305,6 +307,7 @@ window.HOP_PRODUCTS = [
     price: 1000.00,
     image: "HAIR/Curly Bob Cut Wig.jpeg",
     badge: "New",
+    hiddenFromShop: true,
     description: "A defined curly bob for a soft, full and confident look.",
     options: [
       { label: "12 inch", price: 1000 },
