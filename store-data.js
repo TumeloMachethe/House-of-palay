@@ -96,7 +96,7 @@ window.HOP_CONFIG = {
   /* SOCIAL / CONTACT LINKS
      Paste your real links/numbers here when ready. The footer icons stay
      visible even while a link is blank, so the Connect section never looks empty. */
-  contactEmail: "houseofpalay26@gmail.com",
+  contactEmail: "houseofpalay@gmail.com",
   whatsappNumber: "27824885007", // PASTE WHATSAPP NUMBER HERE. Example: 27821234567 (country code, no + sign)
   socials: {
     instagram: "https://www.instagram.com/houseofpalayqueens?utm_source=qr", // PASTE FULL INSTAGRAM LINK HERE
@@ -275,8 +275,8 @@ window.HOP_PRODUCTS = [
     price: 1000.00,
     image: "HAIR/Bone Straight frontal hair.jpeg",
     badge: "Signature",
-    hiddenFromShop: true,
     description: "Silky bone-straight frontal hair with a polished finish.",
+    hiddenFromShop: true,
     options: [
       { label: "12 inch", price: 1000 },
       { label: "14 inch", price: 1200 },
@@ -291,8 +291,8 @@ window.HOP_PRODUCTS = [
     price: 1000.00,
     image: "HAIR/Chocolate Brown Straight Middle Part bob Wig.jpeg",
     badge: "Popular",
-    hiddenFromShop: true,
     description: "A sleek chocolate-brown middle-part bob with an elegant finish.",
+    hiddenFromShop: true,
     options: [
       { label: "12 inch", price: 1000 },
       { label: "14 inch", price: 1200 },
@@ -307,8 +307,8 @@ window.HOP_PRODUCTS = [
     price: 1000.00,
     image: "HAIR/Curly Bob Cut Wig.jpeg",
     badge: "New",
-    hiddenFromShop: true,
     description: "A defined curly bob for a soft, full and confident look.",
+    hiddenFromShop: true,
     options: [
       { label: "12 inch", price: 1000 },
       { label: "14 inch", price: 1200 },

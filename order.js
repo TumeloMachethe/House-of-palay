@@ -161,7 +161,8 @@
   }
 
   function calculateDeliveryFee(zoneValue, customArea = "") {
-    if (!zoneValue) return Number(CONFIG.deliveryFee || 0);
+    // Before the customer chooses an area, delivery is not calculated yet.
+    if (!zoneValue) return 0;
     if (zoneValue !== "other") return 0;
     return getFreeAreaFromText(customArea) ? 0 : Number(CONFIG.deliveryFee || 0);
   }
@@ -673,17 +674,26 @@
     const customArea = $("customArea");
     const subtotal = Store.getCartSubtotal();
     const serviceFee = Number(CONFIG.serviceFee || 0);
-    const deliveryFee = calculateDeliveryFee(areaSelect?.value || "", customArea?.value || "");
+    const hasSelectedArea = Boolean(areaSelect?.value);
+    const deliveryFee = hasSelectedArea
+      ? calculateDeliveryFee(areaSelect.value, customArea?.value || "")
+      : 0;
     const total = subtotal + serviceFee + deliveryFee;
 
     if ($("checkoutSubtotal")) $("checkoutSubtotal").textContent = Store.currency.format(subtotal);
     if ($("checkoutServiceFee")) $("checkoutServiceFee").textContent = Store.currency.format(serviceFee);
-    if ($("checkoutDeliveryFee")) $("checkoutDeliveryFee").textContent = deliveryFee === 0 ? "FREE" : Store.currency.format(deliveryFee);
+    if ($("checkoutDeliveryFee")) {
+      $("checkoutDeliveryFee").textContent = !hasSelectedArea
+        ? "Select area"
+        : deliveryFee === 0
+          ? "FREE"
+          : Store.currency.format(deliveryFee);
+    }
     if ($("checkoutGrandTotal")) $("checkoutGrandTotal").textContent = Store.currency.format(total);
 
     const note = $("deliveryFeeNote");
     if (note) {
-      if (!areaSelect?.value) note.textContent = "Choose an area to calculate delivery.";
+      if (!hasSelectedArea) note.textContent = "Choose an area to calculate delivery.";
       else if (deliveryFee === 0) note.textContent = "Free delivery applies to this area.";
       else note.textContent = `${Store.currency.format(deliveryFee)} delivery applies outside the free-delivery areas.`;
     }

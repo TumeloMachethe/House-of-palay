@@ -257,6 +257,117 @@
     ));
   }
 
+  /* ---------------------------- Recently viewed ---------------------------- */
+  const RECENTLY_VIEWED_KEY = "houseOfPalayRecentlyViewed";
+  const RECENTLY_VIEWED_LIMIT = 6;
+
+  function loadRecentlyViewedIds() {
+    try {
+      const value = JSON.parse(localStorage.getItem(RECENTLY_VIEWED_KEY) || "[]");
+      return Array.isArray(value) ? value.filter(Boolean) : [];
+    } catch {
+      return [];
+    }
+  }
+
+  function getRecentlyViewedProducts() {
+    return loadRecentlyViewedIds()
+      .map(id => PRODUCTS.find(product => product.id === id))
+      .filter(product => product && !product.hiddenFromShop)
+      .slice(0, RECENTLY_VIEWED_LIMIT);
+  }
+
+  function ensureRecentlyViewedSection() {
+    if (!productGrid) return null;
+
+    let section = $("recentlyViewedSection");
+    if (section) return section;
+
+    const shopSection = productGrid.closest("section");
+    if (!shopSection) return null;
+
+    section = document.createElement("section");
+    section.className = "recently-viewed section";
+    section.id = "recentlyViewedSection";
+    section.hidden = true;
+    section.innerHTML = `
+      <div class="recently-viewed-head">
+        <div>
+          <p class="eyebrow">JUST FOR YOU</p>
+          <h2>Recently viewed</h2>
+        </div>
+        <span>Pick up where you left off.</span>
+      </div>
+      <div class="recently-viewed-track" id="recentlyViewedTrack"></div>`;
+
+    shopSection.insertAdjacentElement("afterend", section);
+
+    section.addEventListener("click", event => {
+      const button = event.target.closest("[data-recent-view]");
+      if (!button) return;
+      openProductModal(button.dataset.recentView);
+    });
+
+    return section;
+  }
+
+  function renderRecentlyViewed() {
+    const section = ensureRecentlyViewedSection();
+    if (!section) return;
+
+    const products = getRecentlyViewedProducts();
+    const track = section.querySelector("#recentlyViewedTrack");
+    if (!track) return;
+
+    if (!products.length) {
+      section.hidden = true;
+      track.innerHTML = "";
+      return;
+    }
+
+    track.innerHTML = products.map(product => {
+      const starting = productStartingPrice(product);
+      const hasVariablePrice = product.options?.some(option =>
+        typeof option === "object" && option.price != null && Number(option.price) !== Number(product.price)
+      );
+
+      return `
+        <article class="recent-product-card">
+          <button class="recent-product-image" type="button" data-recent-view="${escapeAttribute(product.id)}" aria-label="View ${escapeAttribute(product.name)} again">
+            ${product.badge ? `<span class="product-badge">${escapeHTML(product.badge)}</span>` : ""}
+            <img
+              src="${escapeAttribute(product.image)}"
+              alt="${escapeAttribute(product.name)}"
+              loading="lazy"
+              decoding="async"
+              data-fallback-category="${escapeAttribute(product.category)}"
+              data-fallback-name="${escapeAttribute(product.name)}"
+            />
+          </button>
+          <div class="recent-product-copy">
+            <p>${escapeHTML(displayCategory(product.category))}</p>
+            <h3>${escapeHTML(product.name)}</h3>
+            <div>
+              <strong>${hasVariablePrice ? "From " : ""}${currency.format(starting)}</strong>
+              <button type="button" data-recent-view="${escapeAttribute(product.id)}">View again</button>
+            </div>
+          </div>
+        </article>`;
+    }).join("");
+
+    section.hidden = false;
+    prepareImages(section);
+    attachImageFallbacks(section);
+  }
+
+  function rememberRecentlyViewed(product) {
+    if (!product || product.hiddenFromShop) return;
+    const next = [product.id, ...loadRecentlyViewedIds().filter(id => id !== product.id)]
+      .slice(0, RECENTLY_VIEWED_LIMIT);
+    localStorage.setItem(RECENTLY_VIEWED_KEY, JSON.stringify(next));
+    renderRecentlyViewed();
+  }
+
   function renderProducts() {
     if (!productGrid) return;
 
@@ -336,6 +447,7 @@
     if (addButton) {
       const product = PRODUCTS.find(item => item.id === addButton.dataset.add);
       if (!product) return;
+      rememberRecentlyViewed(product);
       if (productHasChoices(product)) openProductModal(product.id);
       else addToCart(product, getDefaultSelection(product));
     }
@@ -441,6 +553,8 @@ specialOfferBtn?.addEventListener("click", () => {
   function openProductModal(id) {
     activeProduct = PRODUCTS.find(product => product.id === id);
     if (!activeProduct || !productModal) return;
+
+    rememberRecentlyViewed(activeProduct);
 
     if (modalCategory) modalCategory.textContent = displayCategory(activeProduct.category);
     if (modalName) modalName.textContent = activeProduct.name;
@@ -810,6 +924,7 @@ specialOfferBtn?.addEventListener("click", () => {
   prepareImages(document);
   attachImageFallbacks(document);
   renderProducts();
+  renderRecentlyViewed();
   renderCart();
 
   /* --------------------------------------------------------------------------

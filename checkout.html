@@ -183,15 +183,15 @@
       </p>
     </div>
 
-    <!-- One required checkbox only -->
+    <!-- One required legal acknowledgement checkbox -->
     <label class="confirm-check terms-check" id="termsCheckWrap">
       <input id="termsAgreement" name="termsAgreement" required type="checkbox"/>
       <span>
         I agree to the
-        <a href="terms.html" target="_blank" rel="noopener noreferrer">
-          Terms &amp; Conditions
-        </a>,
-        including the delivery, cancellation, returns, exchanges and refund policies.
+        <a href="terms.html" target="_blank" rel="noopener noreferrer">Terms &amp; Conditions</a>
+        and acknowledge that I have read the
+        <a href="privacy.html" target="_blank" rel="noopener noreferrer">Privacy Policy</a>,
+        including how my information is used to process and deliver my order.
       </span>
     </label>
 
@@ -263,8 +263,8 @@
 <div class="footer-column">
   <h3>Orders</h3>
   <a aria-current="page" href="checkout.html">Checkout</a>
-  <a href="terms.html">Terms &amp; Conditions</a>
-  <a href="index.html#delivery">Delivery</a>
+  <a href="terms.html">Terms &amp; Conditions</a><a href="privacy.html">Privacy Policy</a>
+  <a href="index.html#delivery">Delivery</a><a href="index.html#faq">FAQs</a>
   <a href="index.html#about">Our Story</a>
 </div>
 
@@ -360,7 +360,7 @@
 <!--
   Terms guard:
   This runs BEFORE order.js, so PayFast checkout cannot continue
-  unless the customer has accepted the Terms & Conditions.
+  unless the customer has accepted the Terms & Conditions and acknowledged the Privacy Policy.
 -->
 <script>
 (() => {
@@ -375,7 +375,7 @@
     if (terms.checked) {
       termsWrap?.classList.remove("has-error");
 
-      if (status && status.textContent.includes("Terms")) {
+      if (status && (status.textContent.includes("Terms") || status.textContent.includes("Privacy"))) {
         status.textContent = "";
       }
     }
@@ -391,7 +391,7 @@
 
     if (status) {
       status.textContent =
-        "Please accept the Terms & Conditions before continuing to secure payment.";
+        "Please accept the Terms & Conditions and acknowledge the Privacy Policy before continuing to secure payment.";
     }
 
     termsWrap?.scrollIntoView({
