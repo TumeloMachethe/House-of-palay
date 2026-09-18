@@ -280,6 +280,9 @@
   function ensureRecentlyViewedSection() {
     if (!productGrid) return null;
 
+    // Keep the Recently Viewed section on the main index only.
+    if (document.body.classList.contains("category-page")) return null;
+
     let section = $("recentlyViewedSection");
     if (section) return section;
 
