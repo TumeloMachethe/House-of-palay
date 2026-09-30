@@ -1,24 +1,12 @@
 /* ============================================================================
    HOUSE OF PALAY — EASY EDIT FILE
    ============================================================================
-   This is the main file you edit for everyday store changes.
-
-   YOU CAN CHANGE HERE:
-   - Product names
-   - Product prices
-   - Product image filenames
-   - Sizes / perfume sizes / hair lengths
-   - Free-delivery locations
-   - Delivery fee
-   - Optional service fee
-   - FormSubmit email
-   - Make.com webhook links
-   - Social media links
+   Edit product names, prices, images, sizes, delivery, fees and links here.
 
    IMPORTANT PAYMENT SECURITY:
    Do NOT paste a PayFast passphrase or any private secret into this file.
    This file is public in the browser. Keep private PayFast credentials inside
-   Make.com (or another server-side environment), not in front-end JavaScript.
+   Make.com (or another server-side environment).
    ============================================================================ */
 
 window.HOP_CONFIG = {
@@ -27,17 +15,7 @@ window.HOP_CONFIG = {
   currency: "ZAR",
   locale: "en-ZA",
 
-  /* --------------------------------------------------------------------------
-     DELIVERY SETTINGS
-     --------------------------------------------------------------------------
-     FREE DELIVERY AREAS:
-     Add another free area by copying one object and changing id/label/aliases.
-     Example:
-       { id: "sandton", label: "Sandton", aliases: ["sandton"] },
-
-     DELIVERY FEE:
-     The R8 below is charged when the customer is outside all free areas.
-     -------------------------------------------------------------------------- */
+  /* DELIVERY: the fee below is charged outside all free areas. */
   deliveryFee: 60.00,
   freeDeliveryAreas: [
     {
@@ -52,84 +30,37 @@ window.HOP_CONFIG = {
     }
   ],
 
-  /* OPTIONAL CHECKOUT SERVICE FEE
-     Keep this at 0 if you do not want a service fee.
-     Example: serviceFee: 5.00, */
+  /* OPTIONAL CHECKOUT SERVICE FEE (0 = none) */
   serviceFee: 15.00,
 
-  /* --------------------------------------------------------------------------
-     INTEGRATIONS — PASTE YOUR DETAILS HERE LATER
-     -------------------------------------------------------------------------- */
-
-  /* FORM SUBMIT
-     This email receives a NEW ORDER notification after Make accepts/stores
-     the order and before the customer is handed to PayFast. Payment status in
-     that email is therefore Pending PayFast Payment. */
+  /* FormSubmit: receives a NEW ORDER notification (status: Pending PayFast Payment). */
   formSubmitEmail: "houseofpalay26@gmail.com",
 
-  /* MAKE.COM WEBHOOK 1 — CREATE ORDER / PREPARE PAYFAST
-     Paste your Make Custom Webhook URL inside the quotes.
-     The browser sends the checkout order here.
-     Make should create/prepare the order and return PayFast payment data. */
+  /* Make.com webhook 1 — create order / prepare PayFast. */
   makeCreateOrderWebhook: "https://hook.eu1.make.com/866ou0yv06e6t1y3qasxrzfc94oro5g5",
 
-  /* PAYFAST ITN / NOTIFY WEBHOOK
-     This is normally a Make webhook URL used as PayFast's notify_url.
-     PayFast calls this URL directly after a transaction. The browser should
-     NOT decide whether a payment is approved. */
-  /* Leave blank when your Make Webhook Response already sends notify_url
-     directly to PayFast (your current setup). If you choose to map this value
-     in Make later, paste the SECOND Make ITN webhook URL here — never the
-     PayFast /eng/process payment URL. */
+  /* Leave blank when Make already sends notify_url directly to PayFast. */
   payFastNotifyWebhook: "",
 
-  /* Your live website base URL, e.g. https://houseofpalay.co.za
-     Leave blank while testing locally; on a hosted site the browser can infer it. */
+  /* Live website base URL. Leave blank to infer it in the browser. */
   siteUrl: "",
 
-  /* DEVELOPMENT ONLY.
-     false = checkout refuses to fake a payment when Make is not configured.
-     true  = allows you to test the front-end flow without charging money.
-     KEEP FALSE BEFORE LAUNCH. */
+  /* DEVELOPMENT ONLY. KEEP FALSE BEFORE LAUNCH. */
   demoMode: false,
 
-  /* SOCIAL / CONTACT LINKS
-     Paste your real links/numbers here when ready. The footer icons stay
-     visible even while a link is blank, so the Connect section never looks empty. */
   contactEmail: "houseofpalay@gmail.com",
-  whatsappNumber: "27824885007", // PASTE WHATSAPP NUMBER HERE. Example: 27821234567 (country code, no + sign)
+  whatsappNumber: "27824885007",
   socials: {
-    instagram: "https://www.instagram.com/houseofpalayqueens?utm_source=qr", // PASTE FULL INSTAGRAM LINK HERE
-    tiktok: "https://vt.tiktok.com/ZSVcteRco/",    // PASTE FULL TIKTOK LINK HERE
-    facebook: "https://www.facebook.com/share/1CBQ8AmKNo/?mibextid=wwXIfr"   // PASTE FULL FACEBOOK LINK HERE
+    instagram: "https://www.instagram.com/houseofpalayqueens?utm_source=qr",
+    tiktok: "https://vt.tiktok.com/ZSVcteRco/",
+    facebook: "https://www.facebook.com/share/1CBQ8AmKNo/?mibextid=wwXIfr"
   }
 };
 
 /* ============================================================================
-   PRODUCTS
-   ============================================================================
-   HOW TO CHANGE A PRODUCT IMAGE:
-     image: "FOLDER/FILENAME.jpeg"
-
-   HOW TO CHANGE A PRICE:
-     price: 299.99
-
-   HOW TO ADD CLOTHING SIZES:
-     sizes: ["S", "M", "L", "XL"]
-
-   HOW TO ADD COLOURS:
-     colors: ["Black", "Blue", "Grey"]
-
-   If a product has BOTH sizes and colours, the website will show two separate
-   selectors. If it only has one colour, you can leave out the colors line.
-
-   HOW TO ADD OTHER OPTIONS WITH DIFFERENT PRICES:
-     options: [
-       { label: "50 ml", price: 120 },
-       { label: "100 ml", price: 220 }
-     ]
-
-   IMPORTANT: Every product needs a UNIQUE id.
+   PRODUCTS — every product needs a UNIQUE id.
+   Use sizes / colors / options as before.
+   hiddenFromShop: true hides a product from the shop pages.
    ============================================================================ */
 
 window.HOP_PRODUCTS = [
@@ -137,7 +68,7 @@ window.HOP_PRODUCTS = [
   id: "special-offer",
   name: "SPECIAL OFFER",
   category: "Special Offer",
-  price: 365.00, // CHANGE THIS TO YOUR SPECIAL OFFER PRICE
+  price: 365.00,
   image: "sale.jpeg",
   badge: "SPECIAL",
   description: "House of Palay special offer.",
@@ -201,8 +132,7 @@ window.HOP_PRODUCTS = [
     image: "GYM/Ladies Zipper Active Set.jpeg",
     badge: "Popular",
     description: "A sleek zip-front active set for gym sessions and everyday athleisure.",
-    sizes: ["S", "M", "L", "XL"],
-    
+    sizes: ["S", "M", "L", "XL"]
   },
   {
     id: "gym-pink-flare",
@@ -235,7 +165,7 @@ window.HOP_PRODUCTS = [
     sizes: ["S", "M", "L", "XL"],
     colors: ["Black", "Orange", "White"]
   },
-   {
+  {
     id: "gym-Woo-Corset",
     name: "Woo Waist Trainer Corset",
     category: "Gym",
@@ -243,10 +173,9 @@ window.HOP_PRODUCTS = [
     image: "GYM/Woo Waist Trainer Corset.jpeg",
     badge: "Popular",
     description: "dual-strap sweat waist trainer designed for fitness, core support, and temporary abdominal contouring.",
-    sizes: ["S", "M", "L", "XL"],
-    
+    sizes: ["S", "M", "L", "XL"]
   },
-   {
+  {
     id: "gym-sweet-trimmer",
     name: "Waist Bandage Sweet Tummy Trimmer Wrap Belt",
     category: "Gym",
@@ -254,8 +183,7 @@ window.HOP_PRODUCTS = [
     image: "GYM/Waist Bandage Sweet Tummy Trimmer Wrap Belt.jpeg",
     badge: "Popular",
     description: "continuous elastic bandage wrap waist trainer.",
-    sizes: ["S", "M", "L", "XL"],
-    
+    sizes: ["S", "M", "L", "XL"]
   },
   {
     id: "gym-Waist-slimming",
@@ -267,8 +195,10 @@ window.HOP_PRODUCTS = [
     description: "a heavy-duty underbust garment engineered for intense midsection compression and posture support.",
     sizes: ["S", "M", "L", "XL"]
   },
+
   /* ================================= HAIR ================================ */
- {
+  /* Hair is now LIVE: hiddenFromShop has been removed from these products. */
+  {
     id: "hair-bone-straight",
     name: "Bone Straight Frontal Hair",
     category: "Hair",
@@ -276,7 +206,6 @@ window.HOP_PRODUCTS = [
     image: "HAIR/Bone Straight frontal hair.jpeg",
     badge: "Signature",
     description: "Silky bone-straight frontal hair with a polished finish.",
-    hiddenFromShop: true,
     options: [
       { label: "12 inch", price: 1000 },
       { label: "14 inch", price: 1200 },
@@ -292,7 +221,6 @@ window.HOP_PRODUCTS = [
     image: "HAIR/Chocolate Brown Straight Middle Part bob Wig.jpeg",
     badge: "Popular",
     description: "A sleek chocolate-brown middle-part bob with an elegant finish.",
-    hiddenFromShop: true,
     options: [
       { label: "12 inch", price: 1000 },
       { label: "14 inch", price: 1200 },
@@ -308,7 +236,6 @@ window.HOP_PRODUCTS = [
     image: "HAIR/Curly Bob Cut Wig.jpeg",
     badge: "New",
     description: "A defined curly bob for a soft, full and confident look.",
-    hiddenFromShop: true,
     options: [
       { label: "12 inch", price: 1000 },
       { label: "14 inch", price: 1200 },
@@ -331,7 +258,7 @@ window.HOP_PRODUCTS = [
       { label: "100 ml", price: 220.00 }
     ]
   },
-   {
+  {
     id: "perf-EAU",
     name: "EAU DE PARFUM",
     category: "Perfumes",
@@ -370,7 +297,7 @@ window.HOP_PRODUCTS = [
       { label: "100 ml", price: 220.00 }
     ]
   },
-   {
+  {
     id: "perf-Latarffa-pink",
     name: "YARA Lattafa pink",
     category: "Perfumes",
